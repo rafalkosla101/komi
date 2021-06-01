@@ -1,1 +1,48 @@
 
+import operator
+import numpy as np
+def redukcja(m):
+    lb = 0
+    for wiersz in range(len(m)):
+        mw = min(m[wiersz,:])
+        lb += mw
+        m[wiersz,:] = m[wiersz,:] - mw
+
+    for kol in range(len(m[0])):
+        mk = min(m[:,kol])
+        lb += mk
+        m[:,kol] = m[:,kol] - mk
+    return m,lb
+
+def mincol(m,i,j):
+    mi = np.inf
+    for k in range(len(m)):
+        if mi > m[k,j] and k != i:
+            mi = m[k,j]
+    return mi
+
+def minrow(m,i,j):
+    mi = np.inf
+    for k in range(len(m)):
+        if mi > m[i,k] and k != j:
+            mi = m[i,k]
+    return mi
+def choose(m):
+    tab = []
+    for i in range(len(m)):
+        for j in range(len(m[0])):
+            if m[i][j] == 0:
+                mk = mincol(m,i,j)
+                mw = minrow(m,i,j)
+                cost = mk + mw
+                tab.append((i,j,cost))
+    tab.sort(key=operator.itemgetter(2),reverse=True)
+    return tab[0]
+m = [[np.inf,5,3],
+     [5,np.inf,6],
+     [6,4,np.inf]]
+m = np.array(m)
+m2 = redukcja(m)
+print(m2[0])
+print(choose(m2[0]))
+
