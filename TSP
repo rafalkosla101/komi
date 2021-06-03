@@ -1,6 +1,8 @@
-
 import operator
 import numpy as np
+
+path =[]
+
 def redukcja(m):
     lb = 0
     for wiersz in range(len(m)):
@@ -28,6 +30,7 @@ def minrow(m,i,j):
             mi = m[i,k]
     return mi
 def choose(m):
+    global path
     tab = []
     for i in range(len(m)):
         for j in range(len(m[0])):
@@ -36,9 +39,10 @@ def choose(m):
                 mw = minrow(m,i,j)
                 cost = mk + mw
                 tab.append((i,j,cost))
+                path.append((i,j))
     tab.sort(key=operator.itemgetter(2),reverse=True)
     return tab[0]
-    
+
 def update_matrix(m,data):
     global path
     x,y,cost = data
@@ -79,7 +83,8 @@ def update_matrix(m,data):
                 enforb = ent
         m[enforb][exforb] = np.inf
     return m
-        
+
+
 m = [[np.inf,5,3],
      [5,np.inf,6],
      [6,4,np.inf]]
