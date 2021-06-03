@@ -38,6 +38,48 @@ def choose(m):
                 tab.append((i,j,cost))
     tab.sort(key=operator.itemgetter(2),reverse=True)
     return tab[0]
+    
+def update_matrix(m,data):
+    global path
+    x,y,cost = data
+    m[x,:] = np.inf
+    m[:,y] = np.inf
+
+
+
+    exit = []
+    enter =[]
+    przejscie = []
+    visited = 0
+    exforb = -1
+    enforb = -1
+
+    for i in path:
+        exit.append(i[0])
+        enter.append(i[1])
+    for i in exit:
+        for j in enter:
+            if i == j:
+                przejscie.append(i)
+    if len(przejscie) <len(m) - 2:
+        for ex in exit:
+            visited = 0
+            for tr in przejscie:
+                if ex == tr:
+                    visited = 1
+            if visited == 0:
+                exforb = ex
+
+        for ent in enter:
+            visited = 0
+            for tr in przejscie:
+                if ent == tr:
+                    visited = 1
+            if visited == 0:
+                enforb = ent
+        m[enforb][exforb] = np.inf
+        
+        
 m = [[np.inf,5,3],
      [5,np.inf,6],
      [6,4,np.inf]]
