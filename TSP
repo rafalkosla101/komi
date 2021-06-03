@@ -78,7 +78,7 @@ def update_matrix(m,data):
             if visited == 0:
                 enforb = ent
         m[enforb][exforb] = np.inf
-        
+    return m
         
 m = [[np.inf,5,3],
      [5,np.inf,6],
